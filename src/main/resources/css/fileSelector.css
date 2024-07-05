@@ -1,0 +1,13 @@
+.stackPane_Entered {
+    -fx-background-color: #282c45;
+}
+
+.stackPane_Exited {
+    -fx-background-color: #181b2e;
+}
+
+
+#selectArea:hover {
+    -fx-background-color: #15181e !important;
+    -fx-cursor: hand;
+}

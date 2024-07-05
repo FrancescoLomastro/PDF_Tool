@@ -58,7 +58,7 @@
                         <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="41.0" prefWidth="600.0" spacing="5.0" style="-fx-background-color: #0d0e18;" BorderPane.alignment="CENTER">
                             <children>
                                 <Button fx:id="backButton" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="24.0" prefWidth="47.0" style="-fx-background-color: #424450;" text="Back" textFill="WHITE" />
-                                <TextField fx:id="pageLabel" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefColumnCount="5" prefHeight="20.0" prefWidth="48.0" style="-fx-background-color: #424450; -fx-text-fill: white;" text="0">
+                                <TextField fx:id="pageLabel" alignment="CENTER_RIGHT" maxHeight="-Infinity" minHeight="-Infinity" prefColumnCount="5" prefHeight="20.0" prefWidth="48.0" style="-fx-background-color: #424450; -fx-text-fill: white;" text="1">
                                     <font>
                                         <Font size="14.0" />
                                     </font>

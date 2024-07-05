@@ -49,6 +49,8 @@ public class PDFHandler {
     }
 
     public Interaction undo() {
+        //print the whole list of undoList
+
         Interaction command = null;
         if (isUndoAvailable()) {
             command = undoList.remove(undoList.size() - 1);
@@ -62,12 +64,14 @@ public class PDFHandler {
     }
 
     public Interaction redo() {
+
         Interaction command = null;
         if (isRedoAvailable()) {
             command = redoList.remove(redoList.size() - 1);
             undoList.add(command);
             isSaved = false;
         }
+
         return command;
     }
 

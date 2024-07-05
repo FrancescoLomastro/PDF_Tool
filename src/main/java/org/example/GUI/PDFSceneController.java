@@ -55,7 +55,10 @@ public class PDFSceneController implements Initializable {
         Interaction command = pdfHandler.redo();
         if(command != null) {
             if (command.getAction() == Action.ADD) {
-                pageVBox.getChildren().add(command.getPageIndex(),command.getRemovedPane());
+                Pane newPane = command.getRemovedPane();
+                if (command.getRemovedPane() == null)
+                    newPane = getWhitePane();
+                pageVBox.getChildren().add(command.getPageIndex(),newPane);
             } else if (command.getAction() == Action.REMOVE) {
                 pageVBox.getChildren().remove(command.getPageIndex());
             }
@@ -73,10 +76,12 @@ public class PDFSceneController implements Initializable {
 
     private void handleLeftClick(Pane clickedPane) {
         int index = pageVBox.getChildren().indexOf(clickedPane);
-        Pane newPane = new Pane();
-        newPane.setMinSize(PANE_SIZE,PANE_SIZE);
-        newPane.setMaxSize(PANE_SIZE,PANE_SIZE);
-        newPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+        addBlackPage(index);
+
+    }
+
+    private void addBlackPage(int index) {
+        Pane newPane = getWhitePane();
         if (index < pageVBox.getChildren().size() - 1) {
             pageVBox.getChildren().add(index + 1, newPane);
             pdfHandler.addPage(index + 1);
@@ -84,6 +89,15 @@ public class PDFSceneController implements Initializable {
             pageVBox.getChildren().add(newPane);
             pdfHandler.addPage(pageVBox.getChildren().size() - 1);
         }
+        modify();
+    }
+
+    private Pane getWhitePane() {
+        Pane newPane = new Pane();
+        newPane.setMinSize(PANE_SIZE,PANE_SIZE);
+        newPane.setMaxSize(PANE_SIZE,PANE_SIZE);
+        newPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+
         Rectangle overlay = new Rectangle(newPane.getMinWidth(), newPane.getMinHeight(), OVERLAY_COLOR);
         overlay.setOpacity(0.0);
         newPane.getChildren().add(overlay);
@@ -103,9 +117,7 @@ public class PDFSceneController implements Initializable {
                 handleRightClick((Pane) event.getSource());
             }
         });
-
-        modify();
-
+        return newPane;
     }
 
     private void handleRightClick(Pane clickedPane) {
@@ -190,7 +202,7 @@ public class PDFSceneController implements Initializable {
         updateSaveLabel();
         updateMenuItems();
         updatePageNumbers();
-
+        enableButtons();
     }
 
     private void updatePageNumbers() {
@@ -222,7 +234,6 @@ public class PDFSceneController implements Initializable {
             }
         });
         pageLabel.setOnAction(event -> {
-            System.out.println("Enter pressed");
             String page = pageLabel.getText();
             int pageInt = Integer.parseInt(page);
             if(page.isEmpty() || pageInt < 1 || pageInt > pageVBox.getChildren().size()) {
@@ -236,23 +247,29 @@ public class PDFSceneController implements Initializable {
         });
         scrollPane.vvalueProperty().addListener((obs, oldVal, newVal) -> {
             updateScroll();
+            enableButtons();
         });
         nextButton.setOnAction(event -> {
             int pageInt = Integer.parseInt(pageLabel.getText());
             if(pageInt < pageVBox.getChildren().size()) {
-                scrollToPage(pageInt);
+                scrollToPage(pageInt+1);
             }
         });
         backButton.setOnAction(event -> {
             int pageInt = Integer.parseInt(pageLabel.getText());
             if(pageInt > 1) {
-                scrollToPage(pageInt-1 -1);
+                scrollToPage(pageInt-1);
             }
         });
         initialLabelValue();
     }
 
-   
+    private void enableButtons() {
+        nextButton.setDisable(Integer.parseInt(pageLabel.getText()) == pageVBox.getChildren().size());
+        backButton.setDisable(Integer.parseInt(pageLabel.getText()) == 1);
+    }
+
+
     private void updateScroll() {
         double vValue = scrollPane.getVvalue();
         double space = pageVBox.getHeight() - scrollPane.getHeight();
@@ -279,7 +296,6 @@ public class PDFSceneController implements Initializable {
             pageLabel.setText("0");
         }
     }
-
 
     private void scrollToPage(int pageInt) {
         double pageBegin= pageVBox.getChildren().get(pageInt-1).getBoundsInParent().getMinY();

@@ -44,7 +44,7 @@ public class PDFModel {
         return pageNumbers;
     }
 
-    public List<byte[]> getPagesAsImages() {
+    public List<byte[]> getPagesAsImages() throws UnknownException {
         int totalPages = document.getNumberOfPages();
         List<byte[]> images = new ArrayList<>();
         for (int i = 1; i <= totalPages; i++) {
@@ -54,27 +54,27 @@ public class PDFModel {
     }
 
 
-    private byte[] getPageAsImage(int pageNumber){
+    private byte[] getPageAsImage(int pageNumber) throws UnknownException {
         BufferedImage image = null;
         try {
             image = renderer.renderImage(pageNumber-1, 1.0f);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UnknownException(e);
         }
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             ImageIO.write(image, "png", baos);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new UnknownException(e);
         }
         return baos.toByteArray();
     }
 
-    public void closeDocument() {
+    public void closeDocument() throws CloseDocException {
         try {
             document.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new CloseDocException(e);
         }
     }
 
@@ -95,11 +95,11 @@ public class PDFModel {
         document.removePage(pageIndex);
     }
 
-    public void save() {
+    public void save() throws SaveDocException {
         try {
             document.save(documentFilePath);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SaveDocException(e);
         }
     }
 }

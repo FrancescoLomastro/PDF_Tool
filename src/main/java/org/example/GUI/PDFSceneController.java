@@ -8,34 +8,47 @@ import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import org.example.Action;
-import org.example.Interaction;
-import org.example.PDFHandler;
+import org.example.*;
 import javafx.scene.paint.Paint;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class PDFSceneController implements Initializable {
     private static final int PANE_SIZE = 450;
-    private static final Paint OVERLAY_COLOR = Color.BLACK;
+    private static final Paint blackColor = Color.BLACK;
+    private static final Paint whiteColor = Color.WHITE;
+    private static final Paint errorColor = Color.web("#cf1f24");
+    private static final Paint textColor = Color.web("#849297");
+    @FXML
+    private Button messageButton;
+
 
     @FXML
     private VBox pageVBox;
     private PDFHandler pdfHandler;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        pdfHandler = new PDFHandler();
+        try {
+            pdfHandler = new PDFHandler();
+        } catch (UnknownException e) {
+            showError(e.getMessage());
+            //throw new RuntimeException(e);
+        }
         showPages();
         modify();
         setupListeners();
+        messageButton.setOnAction(event -> {
+            messageStackPane.setVisible(false);
+        });
     }
-
 
 
 
@@ -70,9 +83,16 @@ public class PDFSceneController implements Initializable {
     }
 
     public void handleSave(ActionEvent actionEvent) {
-        pdfHandler.save();
-        modify();
+        try {
+            pdfHandler.save();
+            modify();
+        } catch (SaveDocException e) {
+            showError("Error saving document, assure that the document is not open in another program");
+            //throw new RuntimeException(e);
+        }
     }
+
+
 
     private void handleLeftClick(Pane clickedPane) {
         int index = pageVBox.getChildren().indexOf(clickedPane);
@@ -98,7 +118,7 @@ public class PDFSceneController implements Initializable {
         newPane.setMaxSize(PANE_SIZE,PANE_SIZE);
         newPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 
-        Rectangle overlay = new Rectangle(newPane.getMinWidth(), newPane.getMinHeight(), OVERLAY_COLOR);
+        Rectangle overlay = new Rectangle(newPane.getMinWidth(), newPane.getMinHeight(), blackColor);
         overlay.setOpacity(0.0);
         newPane.getChildren().add(overlay);
 
@@ -150,7 +170,7 @@ public class PDFSceneController implements Initializable {
         imageView.fitWidthProperty().bind(pane.widthProperty());
         pane.getChildren().add(imageView);
 
-        Rectangle overlay = new Rectangle(pane.getMinWidth(), pane.getMinHeight(), OVERLAY_COLOR);
+        Rectangle overlay = new Rectangle(pane.getMinWidth(), pane.getMinHeight(), blackColor);
         overlay.setOpacity(0.0);
         pane.getChildren().add(overlay);
 
@@ -302,4 +322,29 @@ public class PDFSceneController implements Initializable {
         double space = pageVBox.getHeight() - scrollPane.getHeight();
         scrollPane.setVvalue(pageBegin/space);
     }
+
+    @FXML
+    private StackPane messageStackPane;
+    @FXML
+    private ImageView messageImage;
+    @FXML
+    private Label messageTitle;
+    @FXML
+    private Label messageBody;
+
+
+    private void showError(String s) {
+        messageImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/error_icon.png"))));
+        messageTitle.setText("Error");
+        messageBody.setText(s);
+        messageBody.setTextFill(errorColor);
+        messageButton.setText("Close");
+        messageButton.setTextFill(whiteColor);
+        messageButton.setBackground(Background.fill(errorColor));
+        messageButton.requestFocus();
+        messageStackPane.setVisible(true);
+    }
+
+        // home e how it works
+
 }

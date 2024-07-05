@@ -16,7 +16,7 @@ public class PDFHandler {
     private static PDFModel model = null;
     private boolean isSaved = true;
 
-    public PDFHandler() {
+    public PDFHandler() throws UnknownException {
         model = PDFModel.getInstance();
         pagesList = model.getIntegerList();
         imagesList = model.getPagesAsImages();
@@ -32,7 +32,7 @@ public class PDFHandler {
         return !redoList.isEmpty();
     }
 
-    public void save() {
+    public void save() throws SaveDocException {
         int len = undoList.size();
         for (int i=0; i<len; i++) {
             Interaction interaction = undoList.get(i);

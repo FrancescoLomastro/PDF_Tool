@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.example.CloseDocException;
 import org.example.PDFModel;
 
 import java.io.IOException;
@@ -33,7 +34,11 @@ public class PDFView extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("PDFEditor");
         stage.setOnCloseRequest(e -> {
-            PDFModel.getInstance().closeDocument();
+            try {
+                PDFModel.getInstance().closeDocument();
+            } catch (CloseDocException ex) {
+                throw new RuntimeException(ex);
+            }
         });
         instance = this;
         instance.stage = stage;

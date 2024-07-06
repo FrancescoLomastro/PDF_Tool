@@ -20,7 +20,7 @@
                      <children>
                         <VBox fx:id="selectArea" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="297.0" prefWidth="328.0">
                            <children>
-                              <Label prefHeight="61.0" prefWidth="173.0" text="Click this area to select a file" textAlignment="CENTER" textFill="#868893" wrapText="true">
+                              <Label prefHeight="61.0" prefWidth="173.0" text="Click this area to select a file." textAlignment="CENTER" textFill="#868893" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>

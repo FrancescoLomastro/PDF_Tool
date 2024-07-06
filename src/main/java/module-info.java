@@ -7,8 +7,13 @@ module org.example {
     requires jdk.jsobject;
     requires javafx.graphics;
 
-    opens org.example to javafx.fxml;
-    exports org.example;
+
     exports org.example.GUI;
     opens org.example.GUI to javafx.fxml;
+    exports org.example.Exceptions;
+    opens org.example.Exceptions to javafx.fxml;
+    exports org.example.Model;
+    opens org.example.Model to javafx.fxml;
+    exports org.example.Utility;
+    opens org.example.Utility to javafx.fxml;
 }

@@ -25,7 +25,7 @@
                     <top>
                         <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" prefHeight="27.0" prefWidth="600.0" style="-fx-background-color: #0d0e18;">
                             <children>
-                                <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="0.0" prefWidth="600.0" style="-fx-background-color: #0d0e18;" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
+                                <MenuBar maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefHeight="27.0" prefWidth="181.0" style="-fx-background-color: #0d0e18;" BorderPane.alignment="CENTER" HBox.hgrow="ALWAYS">
                                     <menus>
                                         <Menu fx:id="fileMenu" mnemonicParsing="false" text="File">
                                             <items>
@@ -46,7 +46,12 @@
                                         </Menu>
                                     </menus>
                                 </MenuBar>
-                                <Label fx:id="saveLabel" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="152.0" styleClass="saved">
+                        <Label fx:id="fileNameLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="337.0" styleClass="saved" text="asdad" textFill="#c9c9c9">
+                           <padding>
+                              <Insets right="20.0" />
+                           </padding>
+                        </Label>
+                                <Label fx:id="saveLabel" alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="17.0" prefWidth="89.0" styleClass="saved" text="asdad">
                                     <padding>
                                         <Insets right="20.0" />
                                     </padding>

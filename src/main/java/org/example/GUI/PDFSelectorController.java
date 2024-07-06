@@ -4,26 +4,24 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import org.example.PDFModel;
+import org.example.Model.PDFModel;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
+/**
+ * Controller for the PDFSelector scene
+ */
 public class PDFSelectorController implements Initializable {
 
     @FXML
     private StackPane dragDropArea;
-
 
     @FXML
     private StackPane errorPopUp;
@@ -38,6 +36,12 @@ public class PDFSelectorController implements Initializable {
     private Label errorLabel;
 
 
+    /**
+     * Initializes the controller
+     * Sets up the drag and drop area and the pop up button
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setupDragAndDrop();
@@ -45,6 +49,10 @@ public class PDFSelectorController implements Initializable {
         PDFView.getInstance().removeCloseAction();
     }
 
+    /**
+     * Sets up the pop up button
+     * When clicked, the error pop up is hidden
+     */
     private void setupPopUpButton() {
         popUpButton.setOnAction(event -> {
             errorPopUp.setVisible(false);
@@ -52,6 +60,12 @@ public class PDFSelectorController implements Initializable {
         });
     }
 
+    /**
+     * Sets up the drag and drop area
+     * When a file is dropped, the PDFModel is updated with the file path
+     * If the file is a PDF, the scene is changed to the PDFScene
+     * If the file is not a PDF, an error message is displayed
+     */
     private void setupDragAndDrop() {
         dragDropArea.setOnDragOver(event -> {
             if (event.getDragboard().hasFiles()) {
@@ -113,13 +127,18 @@ public class PDFSelectorController implements Initializable {
         });
     }
 
-
+    /**
+     * Displays an error message in the error pop up
+     * @param message the error message to display
+     */
     private void handleInvalidFile(String message) {
         errorLabel.setText(message);
         errorPopUp.setVisible(true);
     }
 
-
+    /**
+     * Changes the scene to the PDFScene
+     */
     private void changeToPDFScene() {
         bufferingPopUp.setVisible(true);
         dragDropArea.setDisable(true);

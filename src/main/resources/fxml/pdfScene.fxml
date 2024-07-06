@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/pdfScene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.GUI.PDFSceneController">
+<AnchorPane prefHeight="601.0" prefWidth="618.0" stylesheets="@../css/pdfScene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.GUI.PDFSceneController">
     <children>
         <StackPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -41,7 +41,7 @@
                                         </Menu>
                                         <Menu fx:id="helpMenu" mnemonicParsing="false" text="Help">
                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="How It Works" />
+                                                <MenuItem mnemonicParsing="false" onAction="#handleInfo" text="How It Works" />
                                             </items>
                                         </Menu>
                                     </menus>
@@ -80,28 +80,34 @@
                   </ScrollPane>
                </center>
                 </BorderPane>
-                <StackPane fx:id="messageStackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="542.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
+                <StackPane fx:id="messageStackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="326.0" prefWidth="669.0" style="-fx-background-color: rgba(0, 0, 0, 0.5);" visible="false">
                     <children>
-                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="426.0" style="-fx-background-color: #0f111d;">
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="491.0" style="-fx-background-color: #0f111d;">
                             <children>
-                                <VBox alignment="CENTER" prefHeight="232.0" prefWidth="426.0" style="-fx-background-color: #181b2e;">
+                                <VBox alignment="CENTER" prefHeight="232.0" prefWidth="491.0" style="-fx-background-color: #181b2e;">
                                     <children>
-                                        <ImageView fx:id="messageImage" fitHeight="47.0" fitWidth="56.0">
+                                        <ImageView fx:id="messageImage" fitHeight="78.0" fitWidth="97.0">
                                             <image>
                                                 <Image url="@../images/error_icon.png" />
                                             </image>
+                                 <VBox.margin>
+                                    <Insets top="20.0" />
+                                 </VBox.margin>
                                         </ImageView>
-                                        <Label fx:id="messageTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="97.0" text="Error:" textAlignment="CENTER" textFill="#849297">
+                                        <Label fx:id="messageTitle" alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="320.0" text="Error:" textAlignment="CENTER" textFill="#849297">
                                             <font>
-                                                <Font name="System Bold" size="18.0" />
+                                                <Font name="System Bold" size="25.0" />
                                             </font>
                                         </Label>
-                                        <Label fx:id="messageBody" alignment="CENTER" contentDisplay="CENTER" prefHeight="91.0" prefWidth="306.0" textAlignment="CENTER" textFill="#cf1f24" wrapText="true">
+                                        <Label fx:id="messageBody" alignment="CENTER" contentDisplay="CENTER" prefHeight="172.0" prefWidth="414.0" textFill="#cf1f24" wrapText="true">
                                             <font>
                                                 <Font name="System Bold" size="11.0" />
                                             </font>
                                         </Label>
-                                        <Button fx:id="messageButton" mnemonicParsing="false" style="-fx-background-color: #cf1f24;" text="OK" textFill="WHITE" />
+                                        <Button fx:id="messageButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="52.0" text="OK" textFill="#070000">
+                                 <VBox.margin>
+                                    <Insets top="50.0" />
+                                 </VBox.margin></Button>
                                     </children>
                                 </VBox>
                             </children>

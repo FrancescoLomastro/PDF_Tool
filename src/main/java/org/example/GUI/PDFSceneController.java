@@ -80,6 +80,13 @@ public class PDFSceneController implements Initializable {
     }
 
     public void handleHome(ActionEvent actionEvent) {
+        try {
+            pdfHandler.close();
+            PDFView.getInstance().changeScene("/fxml/fileSelector.fxml");
+        } catch (CloseDocException e) {
+            showError(e.getMessage());
+        }
+
     }
 
     public void handleSave(ActionEvent actionEvent) {
@@ -90,6 +97,16 @@ public class PDFSceneController implements Initializable {
             showError("Error saving document, assure that the document is not open in another program");
             //throw new RuntimeException(e);
         }
+    }
+    public void handleInfo(ActionEvent actionEvent) {
+        String string =
+                "This tool allows you to add and remove page from PDF files:\n" +
+                "- Left click on a page to add a white page after it\n" +
+                "- Right click on a page to remove it\n" +
+                "- To navigate between pages use the bottom controls or the scrollbar\n" +
+                "- To save the document click on File -> Save, or Ctrl+s. When the document is saved you will see the Label in the right top corner become Green\n" +
+                "- Undo (Ctrl+z) and Redo (Ctrl+y) are available in the Edit menu \n";
+        showInfo(string);
     }
 
 
@@ -233,10 +250,12 @@ public class PDFSceneController implements Initializable {
     private void updateSaveLabel() {
         if(pdfHandler.isSaved()){
             saveLabel.setText("Saved");
-            saveLabel.setTextFill(Color.LIGHTGREEN);
+            saveLabel.getStyleClass().clear();
+            saveLabel.getStyleClass().add("saved");
         }else {
             saveLabel.setText("Not Saved");
-            saveLabel.setTextFill(Color.RED);
+            saveLabel.getStyleClass().clear();
+            saveLabel.getStyleClass().add("unsaved");
         }
     }
 
@@ -333,18 +352,27 @@ public class PDFSceneController implements Initializable {
     private Label messageBody;
 
 
-    private void showError(String s) {
+    private void showError(String message) {
         messageImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/error_icon.png"))));
         messageTitle.setText("Error");
-        messageBody.setText(s);
+        messageBody.setText(message);
         messageBody.setTextFill(errorColor);
         messageButton.setText("Close");
-        messageButton.setTextFill(whiteColor);
-        messageButton.setBackground(Background.fill(errorColor));
         messageButton.requestFocus();
         messageStackPane.setVisible(true);
     }
 
-        // home e how it works
+
+    private void showInfo(String message) {
+        messageImage.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/info_icon.png"))));
+        messageTitle.setText("How it works");
+        messageBody.setText(message);
+        messageBody.setTextFill(textColor);
+        messageButton.setText("Close");
+        messageButton.requestFocus();
+        messageStackPane.setVisible(true);
+    }
+
+
 
 }

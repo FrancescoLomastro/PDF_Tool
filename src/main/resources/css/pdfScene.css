@@ -24,11 +24,11 @@
     -fx-background-color:  #0d0e18;
 }
 
-#savedLabel.saved {
+#saveLabel.saved {
     -fx-text-fill: #00ff00;
 }
 
-#savedLabel.unsaved {
+#saveLabel.unsaved {
     -fx-text-fill: red;
 }
 
@@ -60,3 +60,10 @@
     -fx-background-color: #15181e !important;
     -fx-cursor: hand;
 }
+
+#messageButton:hover {
+    -fx-background-color: #4c505e !important;
+    -fx-text-fill: #ffffff;
+    -fx-cursor: hand;
+}
+

@@ -98,4 +98,8 @@ public class PDFHandler {
     public boolean isSaved() {
         return isSaved;
     }
+
+    public void close() throws CloseDocException {
+        model.closeDocument();
+    }
 }
